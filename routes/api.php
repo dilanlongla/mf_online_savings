@@ -31,3 +31,6 @@ Route::resource('depts', App\Http\Controllers\API\DeptAPIController::class);
 
 
 Route::resource('user_accounts', App\Http\Controllers\API\UserAccountAPIController::class);
+
+
+Route::resource('transactions', App\Http\Controllers\API\TransactionAPIController::class);
