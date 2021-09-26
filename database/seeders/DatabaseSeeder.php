@@ -21,40 +21,40 @@ class DatabaseSeeder extends Seeder
         // create permissions
 
         // accounts permissions
-        Permission::create(['name' => 'create accounts']);
-        Permission::create(['name' => 'delete accounts']);
-        Permission::create(['name' => 'edit accounts']);
-        Permission::create(['name' => 'view accounts']);
+        Permission::create(['name' => 'create accounts', 'guard_name' => 'api']);
+        Permission::create(['name' => 'delete accounts', 'guard_name' => 'api']);
+        Permission::create(['name' => 'edit accounts', 'guard_name' => 'api']);
+        Permission::create(['name' => 'view accounts', 'guard_name' => 'api']);
 
         // user accounts permissions
-        Permission::create(['name' => 'create user accounts']);
-        Permission::create(['name' => 'delete user accounts']);
-        Permission::create(['name' => 'edit user accounts']);
-        Permission::create(['name' => 'view user accounts']);
+        Permission::create(['name' => 'create user accounts', 'guard_name' => 'api']);
+        Permission::create(['name' => 'delete user accounts', 'guard_name' => 'api']);
+        Permission::create(['name' => 'edit user accounts', 'guard_name' => 'api']);
+        Permission::create(['name' => 'view user accounts', 'guard_name' => 'api']);
 
         // clients permissions
-        Permission::create(['name' => 'create clients']);
-        Permission::create(['name' => 'delete clients']);
-        Permission::create(['name' => 'edit clients']);
-        Permission::create(['name' => 'view clients']);
+        Permission::create(['name' => 'create clients', 'guard_name' => 'api']);
+        Permission::create(['name' => 'delete clients', 'guard_name' => 'api']);
+        Permission::create(['name' => 'edit clients', 'guard_name' => 'api']);
+        Permission::create(['name' => 'view clients', 'guard_name' => 'api']);
 
         // agents permissions
-        Permission::create(['name' => 'create agents']);
-        Permission::create(['name' => 'delete agents']);
-        Permission::create(['name' => 'edit agents']);
-        Permission::create(['name' => 'view agents']);
+        Permission::create(['name' => 'create agents', 'guard_name' => 'api']);
+        Permission::create(['name' => 'delete agents', 'guard_name' => 'api']);
+        Permission::create(['name' => 'edit agents', 'guard_name' => 'api']);
+        Permission::create(['name' => 'view agents', 'guard_name' => 'api']);
 
         // Depts permissions
-        Permission::create(['name' => 'create depts']);
-        Permission::create(['name' => 'delete depts']);
-        Permission::create(['name' => 'edit depts']);
-        Permission::create(['name' => 'view depts']);
+        Permission::create(['name' => 'create depts', 'guard_name' => 'api']);
+        Permission::create(['name' => 'delete depts', 'guard_name' => 'api']);
+        Permission::create(['name' => 'edit depts', 'guard_name' => 'api']);
+        Permission::create(['name' => 'view depts', 'guard_name' => 'api']);
 
         // Transactions permissions
-        Permission::create(['name' => 'create transactions']);
-        Permission::create(['name' => 'delete transactions']);
-        Permission::create(['name' => 'edit transactions']);
-        Permission::create(['name' => 'view transactions']);
+        Permission::create(['name' => 'create transactions', 'guard_name' => 'api']);
+        Permission::create(['name' => 'delete transactions', 'guard_name' => 'api']);
+        Permission::create(['name' => 'edit transactions', 'guard_name' => 'api']);
+        Permission::create(['name' => 'view transactions', 'guard_name' => 'api']);
 
         // create roles and assign created permissions
 
@@ -63,7 +63,7 @@ class DatabaseSeeder extends Seeder
         // $role->givePermissionTo('edit articles');
 
         // or may be done by chaining
-        $role = Role::create(['name' => 'agent'])
+        $role = Role::create(['name' => 'agent', 'guard_name' => 'api'])
             ->givePermissionTo([
                 'create transactions',
                 'edit transactions',
@@ -75,7 +75,9 @@ class DatabaseSeeder extends Seeder
                 'view clients',
             ]);
 
-        $role = Role::create(['name' => 'super-admin']);
+        $role = Role::create(['name' => 'client', 'guard_name' => 'api']);
+
+        $role = Role::create(['name' => 'super-admin', 'guard_name' => 'api']);
         $role->givePermissionTo(Permission::all());
     }
 }
