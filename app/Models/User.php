@@ -91,10 +91,7 @@ class User extends Authenticatable
         'fname' => 'required|unique',
         'lname' => 'required',
         'nic' => 'required',
-        'matricle' => 'required',
         'address' => 'required',
         'tel' => 'required|numeric',
-        'occcupation' => 'required',
-        'status' => 'account integer:unsigned:foreign,user_accounts,id,cascade'
     ];
 }
