@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * App\Models\User
@@ -42,6 +43,7 @@ use Laravel\Passport\HasApiTokens;
  */
 class User extends Authenticatable
 {
+    use HasRoles;
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
@@ -62,6 +64,8 @@ class User extends Authenticatable
         'password',
     ];
 
+    protected $guard_name = 'api';
+    
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -80,18 +84,5 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-    ];
-
-    /**
-     * Validation rules
-     *
-     * @var array
-     */
-    public static $rules = [
-        'fname' => 'required|unique',
-        'lname' => 'required',
-        'nic' => 'required',
-        'address' => 'required',
-        'tel' => 'required|numeric',
     ];
 }
