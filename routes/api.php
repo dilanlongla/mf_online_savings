@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\AccountAPIController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\UserAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,12 +18,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('register', [AuthController::class, 'register']);
+Route::post('register_client', [AuthController::class, 'registerClient']);
+Route::post('register_agent', [AuthController::class, 'registerAgent']);
 Route::post('login', [AuthController::class, 'login']);
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+Route::resource('users', UserAPIController::class)->except(['store', 'create']);
 
 Route::resource('accounts', AccountAPIController::class);
 
