@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
-use App\Http\Requests\CreateUserAPIRequest as RequestsCreateUserAPIRequest;
 use Response;
 
 /**
@@ -42,23 +41,6 @@ class UserAPIController extends AppBaseController
         );
 
         return $this->sendResponse($users->toArray(), 'Users retrieved successfully');
-    }
-
-    /**
-     * Store a newly created User in storage.
-     * POST /users
-     *
-     * @param CreateUserAPIRequest $request
-     *
-     * @return Response
-     */
-    public function store(CreateUserAPIRequest $request)
-    {
-        $input = $request->all();
-
-        $user = $this->userRepository->create($input);
-
-        return $this->sendResponse($user->toArray(), 'User saved successfully');
     }
 
     /**
