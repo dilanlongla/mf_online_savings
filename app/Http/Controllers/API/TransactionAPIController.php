@@ -8,7 +8,9 @@ use App\Models\Transaction;
 use App\Repositories\TransactionRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use Auth;
 use Response;
+use Str;
 
 /**
  * Class TransactionController
@@ -44,6 +46,42 @@ class TransactionAPIController extends AppBaseController
     }
 
     /**
+     * Display a listing of the Transaction by user id.
+     * GET|HEAD /transactions
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function transaction_by_agent_id($id, Request $request)
+    {
+        $transactions = $this->transactionRepository->all(
+            $request->except(['skip', 'limit']),
+            $request->get('skip'),
+            $request->get('limit')
+        )->where('collector_id', $id);
+
+        return $this->sendResponse($transactions->toArray(), 'Transactions retrieved successfully');
+    }
+
+    /**
+     * Display a listing of the Transactions done on a user account.
+     * GET|HEAD /transactions
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function transaction_by_account_id($id, Request $request)
+    {
+        $transactions = $this->transactionRepository->all(
+            $request->except(['skip', 'limit']),
+            $request->get('skip'),
+            $request->get('limit')
+        )->where('account_id', $id);
+
+        return $this->sendResponse($transactions->toArray(), 'Transactions retrieved successfully');
+    }
+
+    /**
      * Store a newly created Transaction in storage.
      * POST /transactions
      *
@@ -55,6 +93,9 @@ class TransactionAPIController extends AppBaseController
     {
         $input = $request->all();
 
+        $input['collector_id'] = Auth()->id();
+        $input['ref'] = Str::random(10);
+        $input['fee'] = $input['amount'] * 0.02;
         $transaction = $this->transactionRepository->create($input);
 
         return $this->sendResponse($transaction->toArray(), 'Transaction saved successfully');
