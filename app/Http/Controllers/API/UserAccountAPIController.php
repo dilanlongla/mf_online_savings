@@ -44,6 +44,24 @@ class UserAccountAPIController extends AppBaseController
     }
 
     /**
+     * Display a listing of the UserAccount.
+     * GET|HEAD /userAccounts
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function user_accounts_by_user_id($id, Request $request)
+    {
+        $userAccounts = $this->userAccountRepository->all(
+            $request->except(['skip', 'limit']),
+            $request->get('skip'),
+            $request->get('limit')
+        )->where('user_id', $id);
+
+        return $this->sendResponse($userAccounts->toArray(), 'User Accounts retrieved successfully');
+    }
+
+    /**
      * Store a newly created UserAccount in storage.
      * POST /userAccounts
      *
