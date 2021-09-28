@@ -26,7 +26,7 @@ class Transaction extends Model
     use HasFactory;
 
     public $table = 'transactions';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -35,11 +35,11 @@ class Transaction extends Model
     public $fillable = [
         'ref',
         'is_in',
-        'collector_id,',
+        'collector_id',
         'fee',
         'amount',
         'status',
-        'account'
+        'account_id'
     ];
 
     /**
@@ -50,11 +50,11 @@ class Transaction extends Model
     protected $casts = [
         'ref' => 'string',
         'is_in' => 'string',
-        'collector_id,' => 'integer',
+        'collector_id' => 'integer',
         'fee' => 'float',
         'amount' => 'float',
         'status' => 'string',
-        'account' => 'integer'
+        'account_id' => 'integer'
     ];
 
     /**
@@ -63,12 +63,8 @@ class Transaction extends Model
      * @var array
      */
     public static $rules = [
-        'ref' => 'required|unique',
         'is_in' => 'required',
-        'collector_id,' => 'required',
-        'amount' => 'required',
-        'status' => 'account integer:unsigned:foreign,user_accounts,id,cascade'
+        'account_id' => 'required',
+        'amount' => 'required'
     ];
-
-    
 }
