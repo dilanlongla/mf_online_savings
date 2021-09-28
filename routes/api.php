@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\API\AccountAPIController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\TransactionAPIController;
+use App\Http\Controllers\API\UserAccountAPIController;
 use App\Http\Controllers\API\UserAPIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +38,9 @@ Route::resource('depts', App\Http\Controllers\API\DeptAPIController::class);
 
 
 Route::resource('user_accounts', App\Http\Controllers\API\UserAccountAPIController::class);
+Route::get('user_accounts/user/{id}', [UserAccountAPIController::class, 'user_accounts_by_user_id']);
 
 
-Route::resource('transactions', App\Http\Controllers\API\TransactionAPIController::class);
+Route::resource('transactions', App\Http\Controllers\API\TransactionAPIController::class)->middleware('auth:api');
+Route::get('transactions/agent/{id}', [TransactionAPIController::class, 'transaction_by_agent_id']);
+Route::get('transactions/account/{id}', [TransactionAPIController::class, 'transaction_by_account_id']);
