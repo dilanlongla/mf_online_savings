@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Account;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -79,5 +80,9 @@ class DatabaseSeeder extends Seeder
 
         $role = Role::create(['name' => 'super-admin', 'guard_name' => 'api']);
         $role->givePermissionTo(Permission::all());
+
+        //create types of bank Accounts
+        Account::create(['name' => 'Current Account', 'description' => 'for business transactions']);
+        Account::create(['name' => 'Savings Account', 'description' => 'for daily savings']);
     }
 }
