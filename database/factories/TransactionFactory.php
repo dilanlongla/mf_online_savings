@@ -23,14 +23,15 @@ class TransactionFactory extends Factory
     {
         return [
             'ref' => $this->faker->word,
-        'is_in' => $this->faker->randomElement(['out']),
-        'collector_id,' => $this->faker->randomDigitNotNull,
+        'is_in' => $this->faker->word,
         'fee' => $this->faker->randomDigitNotNull,
         'amount' => $this->faker->randomDigitNotNull,
         'status' => $this->faker->word,
-        'account' => $this->faker->randomDigitNotNull,
         'created_at' => $this->faker->date('Y-m-d H:i:s'),
-        'updated_at' => $this->faker->date('Y-m-d H:i:s')
+        'updated_at' => $this->faker->date('Y-m-d H:i:s'),
+        'deleted_at' => $this->faker->date('Y-m-d H:i:s'),
+        'collector_id' => $this->faker->word,
+        'account_id' => $this->faker->word
         ];
     }
 }

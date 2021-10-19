@@ -9,8 +9,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * Class Account
  * @package App\Models
- * @version September 19, 2021, 2:42 pm UTC
+ * @version October 17, 2021, 8:13 am UTC
  *
+ * @property \Illuminate\Database\Eloquent\Collection $userAccounts
  * @property string $name
  * @property string $description
  */
@@ -22,6 +23,9 @@ class Account extends Model
 
     public $table = 'accounts';
     
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
+
 
     protected $dates = ['deleted_at'];
 
@@ -38,6 +42,7 @@ class Account extends Model
      * @var array
      */
     protected $casts = [
+        'id' => 'integer',
         'name' => 'string',
         'description' => 'string'
     ];
@@ -48,8 +53,18 @@ class Account extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required|max:50'
+        'name' => 'required|string|max:50',
+        'description' => 'required|string|max:255',
+        'created_at' => 'nullable',
+        'updated_at' => 'nullable',
+        'deleted_at' => 'nullable'
     ];
 
-    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function userAccounts()
+    {
+        return $this->hasMany(\App\Models\UserAccount::class, 'account_id');
+    }
 }

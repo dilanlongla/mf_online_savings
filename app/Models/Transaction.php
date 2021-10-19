@@ -9,15 +9,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 /**
  * Class Transaction
  * @package App\Models
- * @version September 19, 2021, 4:03 pm UTC
+ * @version October 17, 2021, 7:54 am UTC
  *
+ * @property \App\Models\UserAccount $account
+ * @property \App\Models\User $collector
  * @property string $ref
  * @property string $is_in
- * @property integer $collector_id,
  * @property number $fee
  * @property number $amount
  * @property string $status
- * @property integer $account
+ * @property integer $collector_id
+ * @property integer $account_id
  */
 class Transaction extends Model
 {
@@ -26,6 +28,9 @@ class Transaction extends Model
     use HasFactory;
 
     public $table = 'transactions';
+    
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_at';
 
 
     protected $dates = ['deleted_at'];
@@ -35,10 +40,10 @@ class Transaction extends Model
     public $fillable = [
         'ref',
         'is_in',
-        'collector_id',
         'fee',
         'amount',
         'status',
+        'collector_id',
         'account_id'
     ];
 
@@ -48,12 +53,13 @@ class Transaction extends Model
      * @var array
      */
     protected $casts = [
+        'id' => 'integer',
         'ref' => 'string',
         'is_in' => 'string',
-        'collector_id' => 'integer',
         'fee' => 'float',
         'amount' => 'float',
         'status' => 'string',
+        'collector_id' => 'integer',
         'account_id' => 'integer'
     ];
 
@@ -63,8 +69,31 @@ class Transaction extends Model
      * @var array
      */
     public static $rules = [
-        'is_in' => 'required',
-        'account_id' => 'required',
-        'amount' => 'required'
+        'ref' => 'nullable|string|max:255',
+        'is_in' => 'nullable|string|max:255',
+        'fee' => 'nullable|numeric',
+        'amount' => 'nullable|numeric',
+        'status' => 'nullable|string|max:255',
+        'created_at' => 'nullable',
+        'updated_at' => 'nullable',
+        'deleted_at' => 'nullable',
+        'collector_id' => 'nullable',
+        'account_id' => 'nullable'
     ];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function account()
+    {
+        return $this->belongsTo(\App\Models\UserAccount::class, 'account_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     **/
+    public function collector()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'collector_id');
+    }
 }
